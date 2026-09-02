@@ -1,40 +1,65 @@
 const inputBox = document.getElementById("input-box");
+const addButton = document.getElementById("add-btn");
 const listContainer = document.getElementById("list-container");
-function addTask(){
-    if(inputBox.value==''){
+
+function addTask() {
+    const taskText = inputBox.value.trim();
+
+    if (!taskText) {
         alert("You must write something!");
-}
-else{
-    let li=document.createElement("li");
-    li.innerHTML=inputBox.value;
+        return;
+    }
+
+    const li = document.createElement("li");
+    li.textContent = taskText;
+
+    const deleteButton = document.createElement("span");
+    deleteButton.textContent = "×";
+    deleteButton.className = "delete-btn";
+
+    li.appendChild(deleteButton);
     listContainer.appendChild(li);
-    let span=document.createElement("span");
-    span.innerHTML="\u00d7";
-    li.appendChild(span);
-
-}
-inputBox.value='';
-saveData();
+    inputBox.value = "";
+    saveData();
 }
 
-listContainer.addEventListener("click",function(e){
-    if(e.target.tagName=="LI"){
-        e.target.classList.toggle("checked");
-        saveData();
+addButton.addEventListener("click", addTask);
+
+inputBox.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        addTask();
     }
-    else if(e.target.tagName==="SPAN"){
-        e.target.parentElement.remove();
+});
+
+listContainer.addEventListener("click", function (event) {
+    const deleteButton = event.target.closest(".delete-btn");
+
+    if (deleteButton) {
+        deleteButton.closest("li").remove();
         saveData();
-
+        return;
     }
-},false);
 
-function saveData(){
-    localStorage.setItem("data",listContainer.innerHTML);
-    
+    const clickedItem = event.target.closest("li");
+
+    if (!clickedItem) {
+        return;
+    }
+
+    clickedItem.classList.toggle("checked");
+    saveData();
+});
+
+function saveData() {
+    localStorage.setItem("todoData", listContainer.innerHTML);
 }
 
-function showTask(){
-    listContainer.innerHTML=localStorage.getItem("data");
+function showTask() {
+    const savedTasks = localStorage.getItem("todoData");
+
+    if (savedTasks) {
+        listContainer.innerHTML = savedTasks;
+    }
 }
+
 showTask();

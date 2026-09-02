@@ -67,37 +67,50 @@ button{
 ul li{
     list-style: none;
     font-size: 17px;
-    padding: 12px 8px 12px 50px;
+    padding: 12px 40px 12px 50px;
     user-select: none;
     cursor: pointer;
     position: relative;
-    
-    
-
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
 }
+
 ul li::before{
     content: '';
     position: absolute;
-    height: 28px;
-    width: 28px;
-
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
-    /* border:1px solid grey; */
-    background-image: url(.jpg);
+    background-image: url('unchecked.jpg');
     background-size: cover;
     background-position: center;
-     
-    top: 12px;
-    left: 8px;
-    
-    
+    top: 14px;
+    left: 12px;
 }
-ul li.checked{
+
+ul li.checked {
     color: #555;
     text-decoration: line-through;
-
 }
-ul li.checked::before{
-    
 
+ul li.checked::before {
+    background-image: url('tick.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.delete-btn {
+    color: #ff4d4d;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    color: #d11a2a;
 }
